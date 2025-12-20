@@ -1,6 +1,10 @@
-import express, { urlencoded } from "express";
+import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+
+// routes
+import chatRoutes from "./routes/chat.route.js";
+import adminRoutes from "./routes/admin.route.js";
 
 const app = express();
 
@@ -13,6 +17,10 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// routes
+app.use("/api/chat", chatRoutes);
+app.use("/api/admin", adminRoutes);
 
 app.get("/", (req, res) => {
   res.send("CampusBot is Ready");
