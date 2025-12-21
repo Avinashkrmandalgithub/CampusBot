@@ -30,7 +30,7 @@ const ChatHeader = () => {
             CampusBot <span className="text-cyan-400 text-sm">✨</span>
           </h2>
           <p className="text-xs text-gray-400">
-            AI-Powered University Assistant
+            AI-Powered Brainware University Assistant
           </p>
         </div>
       </div>

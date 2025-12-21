@@ -12,14 +12,14 @@ const ChatMessages = () => {
         <div>
           <div className="bg-blue-900/20 border border-white/10 p-4 rounded-2xl rounded-tl-none backdrop-blur">
             <p className="text-sm text-gray-200 leading-relaxed">
-              Hello! 👋 I'm CampusBot, your AI-powered university assistant. I
+              Hello! 👋 I'm CampusBot, your AI-powered Brainware university assistant. I
               can help you with exams, fees, admissions, events, and more. How
               can I help you today?
             </p>
           </div>
 
           <div className="flex gap-3 mt-1 text-[10px]">
-            <span className="text-cyan-400 font-medium">✨ AI Generated</span>
+            <span className="text-cyan-400 font-medium">✨ CAMPUSBOT</span>
             <span className="text-gray-500">10:37 AM</span>
           </div>
         </div>

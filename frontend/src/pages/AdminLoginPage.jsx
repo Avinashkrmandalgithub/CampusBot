@@ -19,7 +19,7 @@ const AdminLoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0a0518] text-white px-4">
+    <div className="min-h-screen flex items-center justify-center  text-white px-4">
       <div className="w-full max-w-md bg-[#120b2e]/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-8">
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">

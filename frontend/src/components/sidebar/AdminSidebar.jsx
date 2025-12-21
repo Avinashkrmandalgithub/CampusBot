@@ -7,6 +7,7 @@ import {
   Settings,
   GraduationCap,
   ChevronLeft,
+  UserCog,
 } from "lucide-react";
 import SidebarItem from "./SidebarItem.jsx";
 
@@ -31,6 +32,7 @@ const AdminSidebar = () => {
         <SidebarItem icon={HelpCircle} label="FAQs" to="/faqs" />
         <SidebarItem icon={Newspaper} label="News" to="/news" />
         <SidebarItem icon={Calendar} label="Events" to="/events" />
+        <SidebarItem icon={UserCog} label="Admin Login" to="/admin-login" />
         <SidebarItem icon={Settings} label="Settings" to="/settings" />
       </nav>
 
