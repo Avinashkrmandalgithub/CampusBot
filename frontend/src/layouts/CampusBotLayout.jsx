@@ -5,19 +5,19 @@ import UserSidebar from "../components/sidebar/UserSidebar";
 import SphericalParticle from "../components/effects/SphericalParticle";
 import { Menu } from "lucide-react";
 
-// TEMP auth
-const useAuth = () => {
-  return { role: "admin" }; // "user" | "admin"
-};
-
 const CampusBotLayout = () => {
-  const { role } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // 🔹 UI ONLY (change later)
+  const role = "admin"; // "user" | "admin"
 
   const Sidebar = role === "admin" ? AdminSidebar : UserSidebar;
 
   return (
-    <div className="flex h-screen bg-[#0a0518] text-white overflow-hidden">
+    <div className="relative flex h-screen bg-[#0a0518] text-white overflow-hidden">
+     
+      <SphericalParticle />
+
       {/* Mobile Overlay */}
       {mobileOpen && (
         <div
@@ -38,14 +38,8 @@ const CampusBotLayout = () => {
         <Sidebar closeMobile={() => setMobileOpen(false)} />
       </div>
 
-      {/* Main */}
-      <main
-        className="relative flex-1 flex flex-col
-  bg-linear-to-b from-[#0a0518] to-[#120b2e]
-  overflow-y-auto"
-      >
-        <SphericalParticle />
-
+      {/* Main Content (Scrollable) */}
+      <main className="relative flex-1 flex flex-col overflow-y-auto z-10">
         {/* Mobile Top Bar */}
         <div className="md:hidden flex items-center gap-3 p-3 border-b border-white/10">
           <button
