@@ -9,14 +9,16 @@ import {
 } from "lucide-react";
 
 const StatCard = ({ title, value, change, icon: Icon, accent }) => (
-  <div className="bg-white/5 border border-white/10 rounded-xl p-5 flex justify-between items-center">
+  <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-5 flex justify-between items-center">
     <div>
-      <p className="text-sm text-gray-400">{title}</p>
-      <h2 className="text-3xl font-bold mt-1">{value}</h2>
-      {change && <p className="text-xs text-green-400 mt-1">{change}</p>}
+      <p className="text-xs sm:text-sm text-gray-400">{title}</p>
+      <h2 className="text-2xl sm:text-3xl font-bold mt-1">{value}</h2>
+      {change && (
+        <p className="text-[10px] sm:text-xs text-green-400 mt-1">{change}</p>
+      )}
     </div>
     <div className={`p-3 rounded-lg ${accent}`}>
-      <Icon size={22} />
+      <Icon size={20} />
     </div>
   </div>
 );
@@ -26,8 +28,8 @@ const ProgressRow = ({ label, value, max = 50 }) => {
 
   return (
     <div>
-      <div className="flex justify-between text-sm mb-1">
-        <span>{label}</span>
+      <div className="flex justify-between text-xs sm:text-sm mb-1">
+        <span className="truncate">{label}</span>
         <span className="text-gray-400">{value}</span>
       </div>
       <div className="h-2 bg-white/10 rounded-full overflow-hidden">
@@ -42,22 +44,22 @@ const ProgressRow = ({ label, value, max = 50 }) => {
 
 const DashboardPage = () => {
   return (
-    <div className="p-6 z-10 space-y-6">
+    <div className="p-4 sm:p-6 z-10 space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <div className="p-3 rounded-xl bg-purple-600/20">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+        <div className="p-3 rounded-xl bg-purple-600/20 w-fit">
           <LayoutDashboard className="text-purple-400" />
         </div>
         <div>
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <p className="text-gray-400">
+          <h1 className="text-2xl sm:text-3xl font-bold">Dashboard</h1>
+          <p className="text-sm text-gray-400">
             Overview of CampusBot activity and content
           </p>
         </div>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
         <StatCard
           title="Total FAQs"
           value="156"
@@ -91,54 +93,49 @@ const DashboardPage = () => {
       {/* Middle Section */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Recent Updates */}
-        <div className="bg-white/5 border border-white/10 rounded-xl p-5">
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-5">
           <h3 className="text-lg font-semibold mb-4">Recent Updates</h3>
 
-          <ul className="space-y-4">
-            <li className="flex justify-between">
-              <span>
-                <span className="text-xs bg-purple-600 px-2 py-0.5 rounded-full mr-2">
-                  News
+          <ul className="space-y-4 text-sm">
+            {[
+              [
+                "News",
+                "Semester Results Announced",
+                "2 hours ago",
+                "bg-purple-600",
+              ],
+              [
+                "Event",
+                "Tech Fest 2025 Registration Open",
+                "5 hours ago",
+                "bg-cyan-600",
+              ],
+              [
+                "FAQ",
+                "Updated Fee Payment Process",
+                "1 day ago",
+                "border border-white/20",
+              ],
+              ["News", "New Library Hours", "2 days ago", "bg-purple-600"],
+            ].map(([tag, text, time, badge], i) => (
+              <li
+                key={i}
+                className="flex flex-col sm:flex-row sm:justify-between gap-2"
+              >
+                <span className="flex items-center gap-2">
+                  <span className={`text-xs px-2 py-0.5 rounded-full ${badge}`}>
+                    {tag}
+                  </span>
+                  <span className="truncate">{text}</span>
                 </span>
-                Semester Results Announced
-              </span>
-              <span className="text-xs text-gray-400">2 hours ago</span>
-            </li>
-
-            <li className="flex justify-between">
-              <span>
-                <span className="text-xs bg-cyan-600 px-2 py-0.5 rounded-full mr-2">
-                  Event
-                </span>
-                Tech Fest 2025 Registration Open
-              </span>
-              <span className="text-xs text-gray-400">5 hours ago</span>
-            </li>
-
-            <li className="flex justify-between">
-              <span>
-                <span className="text-xs border border-white/20 px-2 py-0.5 rounded-full mr-2">
-                  FAQ
-                </span>
-                Updated Fee Payment Process
-              </span>
-              <span className="text-xs text-gray-400">1 day ago</span>
-            </li>
-
-            <li className="flex justify-between">
-              <span>
-                <span className="text-xs bg-purple-600 px-2 py-0.5 rounded-full mr-2">
-                  News
-                </span>
-                New Library Hours
-              </span>
-              <span className="text-xs text-gray-400">2 days ago</span>
-            </li>
+                <span className="text-xs text-gray-400">{time}</span>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Top Queries */}
-        <div className="bg-white/5 border border-white/10 rounded-xl p-5">
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-5">
           <h3 className="text-lg font-semibold mb-4">Top Queries</h3>
 
           <div className="space-y-4">
@@ -152,8 +149,8 @@ const DashboardPage = () => {
       </div>
 
       {/* Bottom Actions */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white/5 border border-white/10 rounded-xl p-5 flex gap-4 items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-5 flex gap-4 items-center">
           <HelpCircle className="text-purple-400" />
           <div>
             <h4 className="font-semibold">Manage FAQs</h4>
@@ -163,7 +160,7 @@ const DashboardPage = () => {
           </div>
         </div>
 
-        <div className="bg-white/5 border border-white/10 rounded-xl p-5 flex gap-4 items-center">
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-5 flex gap-4 items-center">
           <FileText className="text-cyan-400" />
           <div>
             <h4 className="font-semibold">Post News</h4>
@@ -173,7 +170,7 @@ const DashboardPage = () => {
           </div>
         </div>
 
-        <div className="bg-white/5 border border-white/10 rounded-xl p-5 flex gap-4 items-center">
+        <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-5 flex gap-4 items-center">
           <Calendar className="text-purple-400" />
           <div>
             <h4 className="font-semibold">Create Event</h4>

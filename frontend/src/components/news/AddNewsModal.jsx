@@ -5,23 +5,38 @@ const categories = ["Exam", "Holiday", "Notice", "Admission", "General"];
 const AddNewsModal = ({ onClose }) => {
   return (
     <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
-      <div className="bg-[#0a0518] border border-white/10 rounded-2xl w-full max-w-lg p-6 relative shadow-2xl">
+      <div
+        className="
+          bg-[#0a0518] border border-white/10 rounded-2xl
+          w-full max-w-lg
+          p-5 sm:p-6
+          relative shadow-2xl
+          max-h-[90vh] overflow-y-auto
+          no-scrollbar
+        "
+      >
         {/* Close */}
         <button
           onClick={onClose}
           className="absolute right-4 top-4 text-gray-400 hover:text-white"
         >
-          <X />
+          <X size={18} />
         </button>
 
-        <h2 className="text-xl font-bold mb-6">Add New News</h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-6">Add New News</h2>
 
         <div className="space-y-5">
           {/* Title */}
           <div>
             <label className="text-sm text-gray-400">Title</label>
             <input
-              className="w-full mt-1 bg-transparent border border-purple-500/60 rounded-lg p-3 outline-none focus:ring-2 focus:ring-purple-500/30"
+              className="
+                w-full mt-1 bg-transparent
+                border border-purple-500/60
+                rounded-lg p-3 text-sm
+                outline-none
+                focus:ring-2 focus:ring-purple-500/30
+              "
               placeholder="Enter news title..."
             />
           </div>
@@ -31,16 +46,28 @@ const AddNewsModal = ({ onClose }) => {
             <label className="text-sm text-gray-400">Description</label>
             <textarea
               rows={3}
-              className="w-full mt-1 bg-transparent border border-white/10 rounded-lg p-3 outline-none focus:ring-2 focus:ring-purple-500/30"
+              className="
+                w-full mt-1 bg-transparent
+                border border-white/10
+                rounded-lg p-3 text-sm
+                outline-none
+                focus:ring-2 focus:ring-purple-500/30
+              "
               placeholder="Enter description..."
             />
           </div>
 
           {/* Category + Date */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="text-sm text-gray-400">Category</label>
-              <select className="w-full mt-1 bg-[#0a0518] border border-white/10 rounded-lg p-3 text-white">
+              <select
+                className="
+                  w-full mt-1 bg-[#0a0518]
+                  border border-white/10
+                  rounded-lg p-3 text-sm text-white
+                "
+              >
                 <option>Select category</option>
                 {categories.map((c) => (
                   <option key={c} className="bg-[#0a0518]">
@@ -54,7 +81,11 @@ const AddNewsModal = ({ onClose }) => {
               <label className="text-sm text-gray-400">Date</label>
               <input
                 type="date"
-                className="w-full mt-1 bg-transparent border border-white/10 rounded-lg p-3"
+                className="
+                  w-full mt-1 bg-transparent
+                  border border-white/10
+                  rounded-lg p-3 text-sm
+                "
               />
             </div>
           </div>
@@ -73,11 +104,28 @@ const AddNewsModal = ({ onClose }) => {
         </div>
 
         {/* Actions */}
-        <div className="flex justify-end gap-3 mt-8">
-          <button className="px-4 py-2 border border-white/10 rounded-lg">
+        <div className="flex flex-col sm:flex-row justify-end gap-3 mt-8">
+          <button
+            className="
+              w-full sm:w-auto
+              px-4 py-2
+              border border-white/10
+              rounded-lg text-sm
+              hover:bg-white/5 transition
+            "
+          >
             Preview
           </button>
-          <button className="px-5 py-2 bg-linear-to-r from-purple-600 to-cyan-500 rounded-lg font-medium shadow-lg shadow-purple-500/30">
+
+          <button
+            className="
+              w-full sm:w-auto
+              px-5 py-2
+              bg-linear-to-r from-purple-600 to-cyan-500
+              rounded-lg text-sm font-medium
+              shadow-lg shadow-purple-500/30
+            "
+          >
             Publish
           </button>
         </div>

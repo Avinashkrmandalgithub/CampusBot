@@ -19,106 +19,94 @@ const faqs = [
 ];
 
 const Tag = ({ label }) => (
-  <span
-    className="
-      px-2.5 py-1
-      text-xs
-      rounded-full
-      border border-white/20
-      text-gray-200
-      whitespace-nowrap
-    "
-  >
+  <span className="px-2.5 py-1 text-xs rounded-full border border-white/20">
     {label}
   </span>
 );
 
 const FaqTable = () => {
   return (
-    <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
-      <table className="w-full text-sm border-collapse">
-        {/* Header */}
-        <thead className="bg-white/5 text-gray-400">
-          <tr>
-            <th className="text-left px-6 py-4 font-medium">Question</th>
-            <th className="text-left px-6 py-4 font-medium">Category</th>
-            <th className="text-left px-6 py-4 font-medium">Tags</th>
-            <th className="text-right px-6 py-4 font-medium">Actions</th>
-          </tr>
-        </thead>
-
-        {/* Body */}
-        <tbody>
-          {faqs.map((f, i) => (
-            <tr
-              key={i}
-              className="
-                border-t border-white/10
-                hover:bg-white/5
-                transition
-              "
-            >
-              {/* Question */}
-              <td className="px-6 py-5 font-medium leading-snug">
-                {f.q}
-              </td>
-
-              {/* Category */}
-              <td className="px-6 py-5">
-                <span
-                  className="
-                    inline-flex items-center
-                    px-3 py-1
-                    bg-white/10
-                    rounded-full
-                    text-xs font-medium
-                  "
-                >
-                  {f.category}
-                </span>
-              </td>
-
-              {/* Tags */}
-              <td className="px-6 py-5">
-                <div className="flex flex-wrap gap-2">
-                  {f.tags.map((t, i) => (
-                    <Tag key={i} label={t} />
-                  ))}
-                </div>
-              </td>
-
-              {/* Actions */}
-              <td className="px-6 py-5">
-                <div className="flex justify-end items-center gap-4">
-                  <button
-                    className="
-                      p-1.5 rounded-md
-                      hover:bg-white/10
-                      transition
-                    "
-                    title="Edit FAQ"
-                  >
-                    <Pencil size={16} />
-                  </button>
-
-                  <button
-                    className="
-                      p-1.5 rounded-md
-                      hover:bg-red-500/20
-                      text-red-400
-                      transition
-                    "
-                    title="Delete FAQ"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-              </td>
+    <>
+      {/* ===== DESKTOP TABLE ===== */}
+      <div className="hidden lg:block bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+        <table className="w-full text-sm border-collapse">
+          <thead className="bg-white/5 text-gray-400">
+            <tr>
+              <th className="text-left px-6 py-4">Question</th>
+              <th className="text-left px-6 py-4">Category</th>
+              <th className="text-left px-6 py-4">Tags</th>
+              <th className="text-right px-6 py-4">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+
+          <tbody>
+            {faqs.map((f, i) => (
+              <tr key={i} className="border-t border-white/10 hover:bg-white/5">
+                <td className="px-6 py-5 font-medium">{f.q}</td>
+
+                <td className="px-6 py-5">
+                  <span className="px-3 py-1 bg-white/10 rounded-full text-xs">
+                    {f.category}
+                  </span>
+                </td>
+
+                <td className="px-6 py-5">
+                  <div className="flex flex-wrap gap-2">
+                    {f.tags.map((t, i) => (
+                      <Tag key={i} label={t} />
+                    ))}
+                  </div>
+                </td>
+
+                <td className="px-6 py-5">
+                  <div className="flex justify-end gap-4">
+                    <button className="p-1.5 hover:bg-white/10 rounded-md">
+                      <Pencil size={16} />
+                    </button>
+                    <button className="p-1.5 hover:bg-red-500/20 rounded-md text-red-400">
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* ===== MOBILE CARDS ===== */}
+      <div className="lg:hidden space-y-4">
+        {faqs.map((f, i) => (
+          <div
+            key={i}
+            className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3"
+          >
+            <div className="font-medium">{f.q}</div>
+
+            <div className="flex items-center gap-2 text-xs">
+              <span className="px-3 py-1 bg-white/10 rounded-full">
+                {f.category}
+              </span>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {f.tags.map((t, i) => (
+                <Tag key={i} label={t} />
+              ))}
+            </div>
+
+            <div className="flex justify-end gap-3 pt-2">
+              <button className="p-2 hover:bg-white/10 rounded-md">
+                <Pencil size={16} />
+              </button>
+              <button className="p-2 hover:bg-red-500/20 rounded-md text-red-400">
+                <Trash2 size={16} />
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   );
 };
 

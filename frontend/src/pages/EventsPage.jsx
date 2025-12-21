@@ -38,15 +38,17 @@ const EventsPage = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="p-6 z-10 space-y-8">
+    <div className="p-4 sm:p-6 z-10 space-y-6 sm:space-y-8">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-purple-600/20">
+          <div className="p-3 rounded-xl bg-purple-600/20 shrink-0">
             <CalendarDays className="text-purple-400" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold">Events Management</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold">
+              Events Management
+            </h1>
             <p className="text-gray-400 text-sm">
               Schedule and manage campus events
             </p>
@@ -55,40 +57,57 @@ const EventsPage = () => {
 
         <button
           onClick={() => setOpen(true)}
-          className="bg-linear-to-r from-purple-600 to-cyan-500 px-5 py-2.5 rounded-lg flex items-center gap-2 font-medium shadow-lg shadow-purple-500/30 hover:opacity-90 transition"
+          className="
+            w-full sm:w-auto
+            bg-linear-to-r from-purple-600 to-cyan-500
+            px-5 py-2.5 rounded-lg
+            flex items-center justify-center gap-2
+            font-medium
+            shadow-lg shadow-purple-500/30
+            hover:opacity-90 transition
+          "
         >
           <Plus size={18} /> Create Event
         </button>
       </div>
 
       {/* Content */}
-      <div className="grid grid-cols-1 xl:grid-cols-[420px_1fr] gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-[380px_1fr] gap-6 xl:gap-8">
         {/* Calendar */}
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6">
           <div className="flex justify-between items-center mb-4">
             <button className="text-gray-400">‹</button>
-            <h3 className="font-semibold">December 2025</h3>
+            <h3 className="font-semibold text-sm sm:text-base">
+              December 2025
+            </h3>
             <button className="text-gray-400">›</button>
           </div>
 
-          <div className="grid grid-cols-7 text-center text-sm text-gray-400 mb-2">
+          <div className="grid grid-cols-7 text-center text-xs sm:text-sm text-gray-400 mb-2">
             {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((d) => (
               <div key={d}>{d}</div>
             ))}
           </div>
 
-          <div className="grid grid-cols-7 gap-y-3 text-sm">
+          <div className="grid grid-cols-7 gap-y-2 sm:gap-y-3 text-xs sm:text-sm">
             {[...Array(30)].map((_, i) => {
               const day = i + 1;
               const isActive = day === 21;
+
               return (
                 <div
                   key={day}
-                  className={`mx-auto w-9 h-9 flex items-center justify-center rounded-lg ${
-                    isActive
-                      ? "bg-linear-to-r from-purple-600 to-cyan-500 text-white"
-                      : "text-gray-300 hover:bg-white/10"
-                  }`}
+                  className={`
+                    mx-auto
+                    w-8 h-8 sm:w-9 sm:h-9
+                    flex items-center justify-center
+                    rounded-lg
+                    ${
+                      isActive
+                        ? "bg-linear-to-r from-purple-600 to-cyan-500 text-white"
+                        : "text-gray-300 hover:bg-white/10"
+                    }
+                  `}
                 >
                   {day}
                 </div>
@@ -98,9 +117,9 @@ const EventsPage = () => {
         </div>
 
         {/* Events List */}
-        <div className="space-y-6">
+        <div className="space-y-5">
           {/* Tabs */}
-          <div className="flex gap-3">
+          <div className="flex gap-2 sm:gap-3 flex-wrap">
             <button
               onClick={() => setTab("upcoming")}
               className={`px-4 py-2 rounded-lg text-sm ${
@@ -124,7 +143,7 @@ const EventsPage = () => {
           </div>
 
           {tab === "upcoming" && (
-            <div className="text-gray-400 mt-16 text-center">
+            <div className="text-gray-400 py-16 text-center text-sm">
               No upcoming events
             </div>
           )}

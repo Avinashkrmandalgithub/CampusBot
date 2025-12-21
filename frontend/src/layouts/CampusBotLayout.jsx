@@ -39,7 +39,11 @@ const CampusBotLayout = () => {
       </div>
 
       {/* Main */}
-      <main className="relative flex-1 flex flex-col bg-linear-to-b from-[#0a0518] to-[#120b2e]">
+      <main
+        className="relative flex-1 flex flex-col
+  bg-linear-to-b from-[#0a0518] to-[#120b2e]
+  overflow-y-auto"
+      >
         <SphericalParticle />
 
         {/* Mobile Top Bar */}

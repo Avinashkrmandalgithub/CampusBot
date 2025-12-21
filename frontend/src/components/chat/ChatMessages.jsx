@@ -10,7 +10,7 @@ const TypingDots = () => (
 
 const ChatMessages = () => {
   return (
-    <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-6 space-y-6 z-10">
+    <div className="flex-1 overflow-y-auto no-scrollbar px-3 sm:px-6 py-6 space-y-6 z-10">
       {/* AI MESSAGE */}
       <div className="flex items-start gap-3 max-w-full sm:max-w-3xl">
         <div className="mt-1 bg-cyan-900/30 p-2 rounded-lg border border-cyan-500/50 shrink-0">
