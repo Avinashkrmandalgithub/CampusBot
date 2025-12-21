@@ -3,8 +3,6 @@ dotenv.config();
 import faqModel from "../models/FAQ.model.js";
 import { GoogleGenAI } from "@google/genai";
 
-console.log("GEMINI KEY:", process.env.GEMINI_API_KEY);
-
 const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
