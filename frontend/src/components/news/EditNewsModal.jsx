@@ -4,21 +4,20 @@ import { useNewsStore } from "../../store/useNewsStore";
 
 const categories = ["Exam", "Holiday", "Notice", "Admission", "General"];
 
-const AddNewsModal = ({ onClose }) => {
-  const { addNews, loading } = useNewsStore();
-
+const EditNewsModal = ({ news, onClose }) => {
+  const { updateNews, loading } = useNewsStore();
   const [form, setForm] = useState({
-    title: "",
-    desc: "",
-    category: "",
-    date: "",
-    highlight: false,
+    title: news.title,
+    desc: news.desc,
+    category: news.category,
+    date: news.date?.slice(0, 10),
+    highlight: news.highlight,
   });
 
-  const handleSubmit = async () => {
+  const handleSave = async () => {
     if (!form.title || !form.desc || !form.category || !form.date) return;
 
-    await addNews(form);
+    await updateNews(news._id, form);
     onClose();
   };
 
@@ -34,7 +33,7 @@ const AddNewsModal = ({ onClose }) => {
             <X size={18} />
           </button>
 
-          <h2 className="text-lg sm:text-xl font-bold mb-6">Add New News</h2>
+          <h2 className="text-lg sm:text-xl font-bold mb-6">Edit News</h2>
 
           <div className="space-y-5">
             {/* Title */}
@@ -44,7 +43,6 @@ const AddNewsModal = ({ onClose }) => {
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
                 className="w-full bg-transparent border border-purple-500/60 rounded-lg p-3 text-sm outline-none"
-                placeholder="Enter news title..."
               />
             </div>
 
@@ -58,7 +56,6 @@ const AddNewsModal = ({ onClose }) => {
                 value={form.desc}
                 onChange={(e) => setForm({ ...form, desc: e.target.value })}
                 className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
-                placeholder="Enter description..."
               />
             </div>
 
@@ -72,9 +69,6 @@ const AddNewsModal = ({ onClose }) => {
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
                 className="w-full bg-[#0a0518] border border-white/10 rounded-lg p-3 text-sm text-white"
               >
-                <option value="" disabled>
-                  Select category
-                </option>
                 {categories.map((c) => (
                   <option key={c} value={c} className="bg-[#0a0518]">
                     {c}
@@ -117,11 +111,11 @@ const AddNewsModal = ({ onClose }) => {
             </button>
 
             <button
-              onClick={handleSubmit}
+              onClick={handleSave}
               disabled={loading}
               className="px-5 py-2 bg-linear-to-r from-purple-600 to-cyan-500 rounded-lg text-sm font-medium disabled:opacity-60"
             >
-              {loading ? "Publishing..." : "Publish News"}
+              {loading ? "Saving..." : "Save Changes"}
             </button>
           </div>
         </div>
@@ -130,4 +124,4 @@ const AddNewsModal = ({ onClose }) => {
   );
 };
 
-export default AddNewsModal;
+export default EditNewsModal;

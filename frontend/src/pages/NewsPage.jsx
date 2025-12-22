@@ -1,41 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Search, Newspaper } from "lucide-react";
+import { useNewsStore } from "../store/useNewsStore";
 import NewsCard from "../components/news/NewsCard";
 import AddNewsModal from "../components/news/AddNewsModal";
-
-const newsData = [
-  {
-    title: "Semester Results Announced",
-    desc: "Results for Fall 2024 semester are now available on the student portal.",
-    category: "Exam",
-    date: "1/15/2025",
-    highlight: true,
-  },
-  {
-    title: "Winter Vacation Notice",
-    desc: "Campus will remain closed from Jan 20–25 for winter break.",
-    category: "Holiday",
-    date: "1/14/2025",
-  },
-  {
-    title: "New Library Hours",
-    desc: "Library will now be open until 10 PM on weekdays.",
-    category: "Notice",
-    date: "1/13/2025",
-  },
-];
+import EditNewsModal from "../components/news/EditNewsModal";
 
 const NewsPage = () => {
-  const [open, setOpen] = useState(false);
+  const { news, fetchNews } = useNewsStore();
+
+  const [openAdd, setOpenAdd] = useState(false);
+  const [editNews, setEditNews] = useState(null);
+
+  useEffect(() => {
+    fetchNews();
+  }, []);
 
   return (
     <div className="p-4 sm:p-6 z-10 space-y-6 sm:space-y-8">
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-4">
+        {/* Title */}
+        <div className="flex items-center gap-3 sm:gap-4">
           <div className="p-3 rounded-xl bg-purple-600/20 shrink-0">
             <Newspaper className="text-purple-400" />
           </div>
+
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold">News Management</h1>
             <p className="text-gray-400 text-sm mt-1">
@@ -44,9 +33,9 @@ const NewsPage = () => {
           </div>
         </div>
 
-        {/* Add News Button */}
+        {/* Add Button */}
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => setOpenAdd(true)}
           className="
             w-full sm:w-auto
             bg-linear-to-r from-purple-600 to-cyan-500
@@ -57,11 +46,12 @@ const NewsPage = () => {
             hover:opacity-90 transition
           "
         >
-          <Plus size={18} /> Add News
+          <Plus size={18} />
+          <span>Add News</span>
         </button>
       </div>
 
-      {/* Search */}
+      {/* Search (optional but responsive-ready) */}
       <div
         className="
           flex items-center gap-3
@@ -81,7 +71,7 @@ const NewsPage = () => {
         />
       </div>
 
-      {/* Cards */}
+      {/* Cards Grid */}
       <div
         className="
           grid grid-cols-1
@@ -90,12 +80,16 @@ const NewsPage = () => {
           gap-5 sm:gap-6
         "
       >
-        {newsData.map((n, i) => (
-          <NewsCard key={i} {...n} />
+        {news.map((item) => (
+          <NewsCard key={item._id} {...item} onEdit={() => setEditNews(item)} />
         ))}
       </div>
 
-      {open && <AddNewsModal onClose={() => setOpen(false)} />}
+      {/* Modals */}
+      {openAdd && <AddNewsModal onClose={() => setOpenAdd(false)} />}
+      {editNews && (
+        <EditNewsModal news={editNews} onClose={() => setEditNews(null)} />
+      )}
     </div>
   );
 };
