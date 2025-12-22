@@ -8,13 +8,27 @@ export const useFaqStore = create((set) => ({
   error: null,
   faqs: [],
 
-  addFaq: async ({ question, answer, tags }) => {
+  fetchFaqs: async () => {
+    set({ loading: true });
+    try {
+      const res = await axios.get(`${API_URL}/api/admin/faqs`, {
+        withCredentials: true,
+      });
+
+      set({ faqs: res.data, loading: false });
+    } catch (err) {
+      console.error(err);
+      set({ error: "Failed to load FAQs", loading: false });
+    }
+  },
+
+  addFaq: async ({ question, answer, category, tags }) => {
     set({ loading: true, error: null });
 
     try {
       const res = await axios.post(
         `${API_URL}/api/admin/add-faq`,
-        { question, answer, tags },
+        { question, answer, category, tags },
         { withCredentials: true }
       );
 
@@ -26,12 +40,7 @@ export const useFaqStore = create((set) => ({
       return true;
     } catch (err) {
       console.error(err);
-
-      set({
-        error: "Failed to add FAQ",
-        loading: false,
-      });
-
+      set({ error: "Failed to add FAQ", loading: false });
       return false;
     }
   },

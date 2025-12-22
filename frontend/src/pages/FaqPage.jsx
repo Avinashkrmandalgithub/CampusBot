@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Search, Filter, HelpCircle } from "lucide-react";
 import FaqTable from "../components/faq/FaqTable";
-import AddFaqModal from "../components/faq/AddFaqModal";
+import AddFaqModal from "../components/faq/AddFaqModal.jsx";
+import { useFaqStore } from "../store/useFaqStore.js";
 
 const FaqPage = () => {
   const [open, setOpen] = useState(false);
+  const { fetchFaqs } = useFaqStore();
+
+  useEffect(() => {
+    fetchFaqs();
+  }, []);
+
 
   return (
     <div className="p-4 sm:p-6 z-10 space-y-6 sm:space-y-8">
