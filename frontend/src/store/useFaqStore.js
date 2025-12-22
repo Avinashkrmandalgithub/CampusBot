@@ -14,34 +14,50 @@ export const useFaqStore = create((set) => ({
       const res = await axios.get(`${API_URL}/api/admin/faqs`, {
         withCredentials: true,
       });
-
       set({ faqs: res.data, loading: false });
-    } catch (err) {
-      console.error(err);
+    } catch {
       set({ error: "Failed to load FAQs", loading: false });
     }
   },
 
-  addFaq: async ({ question, answer, category, tags }) => {
-    set({ loading: true, error: null });
+  addFaq: async (data) => {
+    set({ loading: true });
+    const res = await axios.post(
+      `${API_URL}/api/admin/add-faq`,
+      data,
+      { withCredentials: true }
+    );
+    set((s) => ({ faqs: [res.data.faq, ...s.faqs], loading: false }));
+    return true;
+  },
 
-    try {
-      const res = await axios.post(
-        `${API_URL}/api/admin/add-faq`,
-        { question, answer, category, tags },
-        { withCredentials: true }
-      );
+  // ✏️ EDIT FAQ
+  updateFaq: async (id, data) => {
+    set({ loading: true });
+    const res = await axios.put(
+      `${API_URL}/api/admin/update-faq/${id}`,
+      data,
+      { withCredentials: true }
+    );
 
-      set((state) => ({
-        faqs: [res.data.faq, ...state.faqs],
-        loading: false,
-      }));
+    set((state) => ({
+      faqs: state.faqs.map((f) =>
+        f._id === id ? res.data.faq : f
+      ),
+      loading: false,
+    }));
+  },
 
-      return true;
-    } catch (err) {
-      console.error(err);
-      set({ error: "Failed to add FAQ", loading: false });
-      return false;
-    }
+  // 🗑️ DELETE FAQ
+  deleteFaq: async (id) => {
+    await axios.delete(
+      `${API_URL}/api/admin/delete-faq/${id}`,
+      { withCredentials: true }
+    );
+
+    set((state) => ({
+      faqs: state.faqs.filter((f) => f._id !== id),
+    }));
   },
 }));
+
