@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 // routes
 import chatRoutes from "./routes/chat.route.js";
 import adminRoutes from "./routes/admin.route.js";
+import newsRoutes from "./routes/news.route.js";
 
 const app = express();
 
@@ -21,6 +22,8 @@ app.use(cookieParser());
 // routes
 app.use("/api/chat", chatRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/news", newsRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("CampusBot is Ready");
