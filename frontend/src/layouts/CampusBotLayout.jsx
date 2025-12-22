@@ -15,7 +15,6 @@ const CampusBotLayout = () => {
 
   return (
     <div className="relative flex h-screen bg-[#0a0518] text-white overflow-hidden">
-     
       <SphericalParticle />
 
       {/* Mobile Overlay */}
