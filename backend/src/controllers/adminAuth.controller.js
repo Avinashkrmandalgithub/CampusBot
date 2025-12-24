@@ -61,3 +61,22 @@ export const adminLogin = async (req, res) => {
     res.status(500).json({ error: "Admin authentication failed" });
   }
 };
+
+export const adminMe = async (req, res) => {
+  res.json({
+    admin: {
+      id: req.admin.id,
+      role: "admin",
+    },
+  });
+};
+
+export const adminLogout = (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+
+  res.json({ success: true });
+};
