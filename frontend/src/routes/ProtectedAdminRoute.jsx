@@ -21,7 +21,6 @@ const ProtectedAdminRoute = () => {
     return <Navigate to="/admin-login" replace />;
   }
 
-  
   return <Outlet />;
 };
 
