@@ -11,6 +11,7 @@ import {
   Sparkles,
   ChevronLeft,
   UserCog,
+  GraduationCap,
 } from "lucide-react";
 
 const AdminSidebar = ({ closeMobile }) => {
@@ -71,6 +72,14 @@ const AdminSidebar = ({ closeMobile }) => {
           collapsed={collapsed}
           onClick={closeMobile}
         />
+        <SidebarItem
+          icon={GraduationCap}
+          label="University Info"
+          to="/university"
+          collapsed={collapsed}
+          onClick={closeMobile}
+        />
+
         <SidebarItem
           icon={Newspaper}
           label="News"
