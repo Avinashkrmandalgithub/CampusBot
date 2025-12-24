@@ -1,11 +1,7 @@
-import dotenv from "dotenv";
-dotenv.config();
-import faqModel from "../models/FAQ.model.js";
-import { GoogleGenAI } from "@google/genai";
-
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
-});
+import { normalizeText } from "../utils/normalize.js";
+import { detectIntent } from "../utils/intent.js";
+import { searchKnowledgeBase } from "../services/knowledgeSearch.js";
+import { aiFallback } from "../services/aiFallback.js";
 
 export const handleChat = async (req, res) => {
   try {
@@ -15,64 +11,31 @@ export const handleChat = async (req, res) => {
       return res.status(400).json({ error: "Message must be a string" });
     }
 
-    /* ---------------- NORMALIZE USER MESSAGE ---------------- */
-    const normalize = (text) =>
-      text
-        .toLowerCase()
-        .replace(/\bu\b/g, "you")
-        .replace(/\bur\b/g, "your")
-        .replace(/[^\w\s]/g, "")
-        .trim();
+    const normalized = normalizeText(message);
+    const words = normalized.split(" ");
+    const intent = detectIntent(words);
 
-    const normalizedMessage = normalize(message);
-    const words = normalizedMessage.split(" ");
+    // 🔍 Search official knowledge
+    const results = await searchKnowledgeBase(words);
 
-    /* ---------------- FAQ MATCHING (PRIORITY) ---------------- */
-    const faq = await faqModel.findOne({
-      $or: [
-        { question: { $regex: normalizedMessage, $options: "i" } },
-        { tags: { $in: words } },
-      ],
-    });
-
-    if (faq) {
+    if (results.length > 0) {
       return res.json({
-        reply: faq.answer,
-        source: "faq",
+        reply: results[0].reply,
+        source: results[0].type,
+        intent,
       });
     }
 
-    /* ---------------- GEMINI AI FALLBACK ---------------- */
-    const prompt = `
-You are CampusBot, an AI helpdesk assistant for Brainware University.
-
-Rules:
-- Answer briefly (max 4 lines)
-- Use simple Hinglish or English
-- Focus on student & staff help only
-- Do not explain AI capabilities
-- Be polite and clear
-
-User question: ${message}
-`;
-
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: prompt,
-    });
-
-    let aiReply = response.text || "Sorry, I couldn't understand that.";
-
-    if (aiReply.length > 500) {
-      aiReply = aiReply.slice(0, 500) + "...";
-    }
+    // 🤖 AI fallback ONLY if nothing found
+    const aiReply = await aiFallback(message);
 
     return res.json({
       reply: aiReply,
-      source: "CampusBot",
+      source: "ai",
+      intent,
     });
   } catch (error) {
     console.error("Chat Error:", error);
-    return res.status(500).json({ error: "AI error" });
+    return res.status(500).json({ error: "Chat system error" });
   }
 };
