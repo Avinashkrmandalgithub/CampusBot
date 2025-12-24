@@ -5,6 +5,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 // routes
+import adminAuthRoutes from "./routes/adminAuth.route.js";
 import chatRoutes from "./routes/chat.route.js";
 import adminRoutes from "./routes/admin.route.js";
 import newsRoutes from "./routes/news.route.js";
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // routes
+app.use("/api/admin-auth", adminAuthRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/news", newsRoutes);
