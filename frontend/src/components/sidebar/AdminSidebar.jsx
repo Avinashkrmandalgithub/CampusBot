@@ -1,3 +1,5 @@
+import { useAdminAuthStore } from "../../store/useAdminAuthStore";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import SidebarItem from "./SidebarItem";
 import {
@@ -12,9 +14,13 @@ import {
   ChevronLeft,
   UserCog,
   GraduationCap,
+  LogOut,
 } from "lucide-react";
 
 const AdminSidebar = ({ closeMobile }) => {
+  const { logoutAdmin } = useAdminAuthStore();
+  const navigate = useNavigate();
+
   const [collapsed, setCollapsed] = useState(window.innerWidth < 1024);
 
   return (
@@ -44,7 +50,7 @@ const AdminSidebar = ({ closeMobile }) => {
             <h1 className="text-lg font-extrabold bg-linear-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               CampusBot
             </h1>
-            <p className="text-[11px] text-gray-400">AI Helpdesk</p>
+            <p className="text-[11px] text-gray-400">Admin Panel</p>
           </div>
         )}
       </div>
@@ -94,13 +100,13 @@ const AdminSidebar = ({ closeMobile }) => {
           collapsed={collapsed}
           onClick={closeMobile}
         />
-        <SidebarItem
+        {/* <SidebarItem
           icon={UserCog}
           label="Admin Login"
           to="/admin-login"
           collapsed={collapsed}
           onClick={closeMobile}
-        />
+        /> */}
         <SidebarItem
           icon={Settings}
           label="Settings"
@@ -108,6 +114,23 @@ const AdminSidebar = ({ closeMobile }) => {
           collapsed={collapsed}
           onClick={closeMobile}
         />
+
+        <button
+          onClick={async () => {
+            await logoutAdmin();
+            navigate("/admin-login");
+          }}
+          className="
+    mt-4 flex items-center gap-2
+    text-red-400 hover:text-red-300
+    px-3 py-2 rounded-lg
+    hover:bg-white/5
+    transition
+  "
+        >
+          <LogOut size={16} />
+          {!collapsed && <span className="text-sm">Logout</span>}
+        </button>
       </nav>
 
       {/* Collapse Toggle */}

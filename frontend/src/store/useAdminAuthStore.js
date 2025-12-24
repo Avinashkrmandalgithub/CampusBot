@@ -7,8 +7,9 @@ export const useAdminAuthStore = create((set) => ({
   admin: null,
   loading: false,
   error: null,
+  checked: false,
 
-  //  Admin Login
+  //  Login
   loginAdmin: async ({ email, password }) => {
     try {
       set({ loading: true, error: null });
@@ -34,8 +35,25 @@ export const useAdminAuthStore = create((set) => ({
     }
   },
 
-  //  Logout (frontend reset)
-  logoutAdmin: () => {
+  // Check existing session (cookie-based)
+  checkAuth: async () => {
+    try {
+      const res = await axios.get(`${API_URL}/api/admin-auth/me`, {
+        withCredentials: true,
+      });
+
+      set({ admin: res.data.admin, checked: true });
+    } catch {
+      set({ admin: null, checked: true });
+    }
+  },
+
+  logoutAdmin: async () => {
+    await axios.post(
+      `${API_URL}/api/admin-auth/logout`,
+      {},
+      { withCredentials: true }
+    );
     set({ admin: null });
   },
 }));

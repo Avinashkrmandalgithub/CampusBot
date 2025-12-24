@@ -2,16 +2,15 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import AdminSidebar from "../components/sidebar/AdminSidebar";
 import UserSidebar from "../components/sidebar/UserSidebar";
+import { useAdminAuthStore } from "../store/useAdminAuthStore";
 import SphericalParticle from "../components/effects/SphericalParticle";
 import { Menu } from "lucide-react";
 
 const CampusBotLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // 🔹 UI ONLY (change later)
-  const role = "admin"; // "user" | "admin"
-
-  const Sidebar = role === "admin" ? AdminSidebar : UserSidebar;
+  const { admin } = useAdminAuthStore();
+  const Sidebar = admin ? AdminSidebar : UserSidebar;
 
   return (
     <div className="relative flex h-screen bg-[#0a0518] text-white overflow-hidden">

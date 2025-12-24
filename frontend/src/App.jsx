@@ -11,25 +11,31 @@ import EventsPage from "./pages/EventsPage";
 import SettingsPage from "./pages/SettingsPage";
 import UniversityInfoPage from "./pages/UniversityInfoPage";
 
+import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
+
 function App() {
   return (
     <Routes>
       {/* Public */}
       <Route path="/admin-login" element={<AdminLoginPage />} />
 
-      {/* App Layout */}
+      {/*  Shared layout */}
       <Route path="/" element={<CampusBotLayout />}>
         <Route index element={<Navigate to="/chat" replace />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/faqs" element={<FaqPage />} />
-        <Route path="/news" element={<NewsPage />} />
-        <Route path="/events" element={<EventsPage />} />
-        <Route path="/university" element={<UniversityInfoPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="chat" element={<ChatPage />} />
+        <Route path="settings" element={<SettingsPage />} />
+
+        {/*  Admin-only */}
+        <Route element={<ProtectedAdminRoute />}>
+          <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="faqs" element={<FaqPage />} />
+          <Route path="news" element={<NewsPage />} />
+          <Route path="events" element={<EventsPage />} />
+          <Route path="university" element={<UniversityInfoPage />} />
+        </Route>
       </Route>
     </Routes>
-  );      
+  );
 }
 
 export default App;
