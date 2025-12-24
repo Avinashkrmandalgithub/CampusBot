@@ -1,5 +1,6 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
+
 import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({
@@ -7,7 +8,8 @@ const ai = new GoogleGenAI({
 });
 
 export const aiFallback = async (question) => {
-  const prompt = `
+  try {
+    const prompt = `
 You are CampusBot, an AI helpdesk assistant for Brainware University.
 
 Rules:
@@ -19,10 +21,14 @@ Rules:
 User question: ${question}
 `;
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-  });
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+    });
 
-  return response.text || "I do not have official information on this topic.";
+    return response.text || "I do not have official information on this topic.";
+  } catch (error) {
+    console.warn("AI skipped:", error.message);
+    return "I do not have official information on this topic.";
+  }
 };
