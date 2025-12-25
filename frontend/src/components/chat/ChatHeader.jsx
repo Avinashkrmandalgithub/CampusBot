@@ -25,16 +25,16 @@ const QuickAction = ({ icon: Icon, label }) => (
 
 const ChatHeader = () => {
   return (
-    <div className="sticky top-4 sm:top-2 z-20 px-3 sm:px-4 mt-2 sm:mt-0">
+    <div className="sticky top-0 z-20 px-3 sm:px-4">
       <header
         className="
-          max-w-6xl mx-auto
-          bg-[#0a0518]/65 backdrop-blur-xl
-          border border-white/10
-          rounded-xl
-          px-3 py-2 sm:px-4 sm:py-3
-          shadow-lg shadow-black/30
-        "
+      max-w-6xl mx-auto
+      bg-[#0a0518]/70 backdrop-blur-xl
+      border border-white/10
+      rounded-xl
+      px-3 py-2 sm:px-4 sm:py-3
+      shadow-lg shadow-black/30
+    "
       >
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           {/* Bot Info */}

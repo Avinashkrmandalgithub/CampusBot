@@ -17,25 +17,26 @@ const AddNewsModal = ({ onClose }) => {
 
   const handleSubmit = async () => {
     if (!form.title || !form.desc || !form.category || !form.date) return;
-
     await addNews(form);
     onClose();
   };
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
-      <div className="w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar">
+      <div className="w-full max-w-md max-h-[90svh] overflow-y-auto no-scrollbar">
         <div className="bg-[#0a0518] border border-white/10 rounded-2xl p-5 sm:p-6 relative shadow-2xl">
           {/* Close */}
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 text-gray-400 hover:text-white"
+            className="absolute right-4 top-4 text-gray-400 hover:text-white transition"
           >
             <X size={18} />
           </button>
 
-          <h2 className="text-lg sm:text-xl font-bold mb-6">Add New News</h2>
+          {/* Header */}
+          <h2 className="text-lg sm:text-xl font-bold mb-6">Add News</h2>
 
+          {/* Form */}
           <div className="space-y-5">
             {/* Title */}
             <div>
@@ -43,8 +44,14 @@ const AddNewsModal = ({ onClose }) => {
               <input
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
-                className="w-full bg-transparent border border-purple-500/60 rounded-lg p-3 text-sm outline-none"
-                placeholder="Enter news title..."
+                placeholder="Enter news title"
+                className="
+                  w-full bg-transparent
+                  border border-purple-500/60
+                  rounded-lg p-3 text-sm
+                  outline-none
+                  focus:border-purple-400
+                "
               />
             </div>
 
@@ -57,8 +64,14 @@ const AddNewsModal = ({ onClose }) => {
                 rows={3}
                 value={form.desc}
                 onChange={(e) => setForm({ ...form, desc: e.target.value })}
-                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
-                placeholder="Enter description..."
+                placeholder="Enter description"
+                className="
+                  w-full bg-transparent
+                  border border-white/10
+                  rounded-lg p-3 text-sm
+                  outline-none
+                  focus:border-white/30
+                "
               />
             </div>
 
@@ -70,7 +83,12 @@ const AddNewsModal = ({ onClose }) => {
               <select
                 value={form.category}
                 onChange={(e) => setForm({ ...form, category: e.target.value })}
-                className="w-full bg-[#0a0518] border border-white/10 rounded-lg p-3 text-sm text-white"
+                className="
+                  w-full bg-[#0a0518]
+                  border border-white/10
+                  rounded-lg p-3 text-sm text-white
+                  focus:border-white/30
+                "
               >
                 <option value="" disabled>
                   Select category
@@ -90,7 +108,13 @@ const AddNewsModal = ({ onClose }) => {
                 type="date"
                 value={form.date}
                 onChange={(e) => setForm({ ...form, date: e.target.value })}
-                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
+                className="
+                  w-full bg-transparent
+                  border border-white/10
+                  rounded-lg p-3 text-sm
+                  outline-none
+                  focus:border-white/30
+                "
               />
             </div>
 
@@ -102,6 +126,7 @@ const AddNewsModal = ({ onClose }) => {
                 onChange={(e) =>
                   setForm({ ...form, highlight: e.target.checked })
                 }
+                className="accent-cyan-500"
               />
               Highlight this news
             </label>
@@ -111,7 +136,13 @@ const AddNewsModal = ({ onClose }) => {
           <div className="flex flex-col sm:flex-row justify-end gap-3 mt-8">
             <button
               onClick={onClose}
-              className="px-4 py-2 border border-white/10 rounded-lg text-sm"
+              className="
+                px-4 py-2
+                border border-white/10
+                rounded-lg text-sm
+                hover:bg-white/5
+                transition
+              "
             >
               Cancel
             </button>
@@ -119,7 +150,12 @@ const AddNewsModal = ({ onClose }) => {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="px-5 py-2 bg-linear-to-r from-purple-600 to-cyan-500 rounded-lg text-sm font-medium disabled:opacity-60"
+              className="
+                px-5 py-2
+                bg-linear-to-r from-purple-600 to-cyan-500
+                rounded-lg text-sm font-medium
+                disabled:opacity-60
+              "
             >
               {loading ? "Publishing..." : "Publish News"}
             </button>

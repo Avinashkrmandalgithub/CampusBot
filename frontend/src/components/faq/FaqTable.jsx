@@ -89,53 +89,36 @@ const FaqTable = () => {
       </div>
 
       {/* ===== MOBILE ===== */}
-      {/* ===== MOBILE ===== */}
-      <div className="lg:hidden space-y-5">
+      <div className="lg:hidden space-y-4">
         {faqs.map((f) => (
           <div
             key={f._id}
-            className="bg-white/5 border border-white/10 rounded-2xl p-4 space-y-4"
+            className="bg-white/5 border border-white/10 rounded-xl p-4 space-y-3"
           >
-            {/* Question */}
-            <div>
-              <p className="text-xs text-gray-400 mb-1">Question</p>
-              <p className="font-medium text-sm leading-relaxed">
-                {f.question}
-              </p>
-            </div>
+            <p className="font-medium text-sm leading-snug">{f.question}</p>
 
-            {/* Category */}
-            <div>
-              <p className="text-xs text-gray-400 mb-1">Category</p>
-              <span className="inline-block px-3 py-1 bg-white/10 rounded-full text-xs">
-                {f.category}
-              </span>
-            </div>
+            <span className="inline-block text-xs px-3 py-1 bg-white/10 rounded-full">
+              {f.category}
+            </span>
 
-            {/* Tags */}
             {f.tags.length > 0 && (
-              <div>
-                <p className="text-xs text-gray-400 mb-1">Tags</p>
-                <div className="flex flex-wrap gap-2">
-                  {f.tags.map((t, i) => (
-                    <Tag key={i} label={t} />
-                  ))}
-                </div>
+              <div className="flex flex-wrap gap-2">
+                {f.tags.map((t, i) => (
+                  <Tag key={i} label={t} />
+                ))}
               </div>
             )}
 
-            {/* Actions */}
             <div className="flex justify-end gap-4 pt-3 border-t border-white/10">
               <button
                 onClick={() => setEditFaq(f)}
-                className="text-indigo-400 text-sm font-medium"
+                className="text-indigo-400 text-sm"
               >
                 Edit
               </button>
-
               <button
                 onClick={() => deleteFaq(f._id)}
-                className="text-red-400 text-sm font-medium"
+                className="text-red-400 text-sm"
               >
                 Delete
               </button>

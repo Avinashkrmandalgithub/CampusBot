@@ -3,7 +3,17 @@ import StatCard from "./StatCard";
 
 const StatsGrid = () => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
+    <div
+      className="
+        grid
+        grid-cols-1
+        sm:grid-cols-2
+        xl:grid-cols-4
+        gap-4
+        sm:gap-5
+        xl:gap-6
+      "
+    >
       <StatCard
         title="Total FAQs"
         value="156"
@@ -11,6 +21,7 @@ const StatsGrid = () => {
         icon={HelpCircle}
         accent="bg-purple-600/20 text-purple-400"
       />
+
       <StatCard
         title="Queries Today"
         value="234"
@@ -18,6 +29,7 @@ const StatsGrid = () => {
         icon={MessageSquare}
         accent="bg-cyan-600/20 text-cyan-400"
       />
+
       <StatCard
         title="Most Asked"
         value="Exams"
@@ -25,6 +37,7 @@ const StatsGrid = () => {
         icon={TrendingUp}
         accent="bg-indigo-600/20 text-indigo-400"
       />
+
       <StatCard
         title="Active Users"
         value="89"

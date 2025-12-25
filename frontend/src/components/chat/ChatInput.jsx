@@ -13,7 +13,14 @@ const ChatInput = () => {
   };
 
   return (
-    <footer className="sticky bottom-0 p-3 sm:p-6 z-10">
+    <footer
+      className="
+    sticky bottom-2 z-20
+    px-3 sm:px-6 py-3
+    bg-linear-to-t from-[#0a0518] via-[#0a0518]/90 to-transparent
+  "
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
       <div className="max-w-4xl mx-auto flex items-center gap-2 bg-[#16122a]/90 border border-white/10 rounded-2xl p-2 backdrop-blur">
         <Paperclip size={18} className="text-gray-400" />
 

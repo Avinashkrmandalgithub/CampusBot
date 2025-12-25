@@ -7,15 +7,23 @@ import EditEventModal from "../components/events/EditEventModal";
 
 /* ---------- Calendar Helpers ---------- */
 const MONTHS = [
-  "January","February","March","April","May","June",
-  "July","August","September","October","November","December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
-const getDaysInMonth = (year, month) =>
-  new Date(year, month + 1, 0).getDate();
+const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
 
-const getStartDay = (year, month) =>
-  new Date(year, month, 1).getDay();
+const getStartDay = (year, month) => new Date(year, month, 1).getDay();
 /* ------------------------------------- */
 
 const EventsPage = () => {
@@ -52,11 +60,11 @@ const EventsPage = () => {
   };
 
   return (
-    <div className="p-4 sm:p-6 z-10 space-y-6 sm:space-y-8">
+    <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-purple-600/20">
+          <div className="p-3 rounded-xl bg-purple-600/20 shrink-0">
             <CalendarDays className="text-purple-400" />
           </div>
           <div>
@@ -74,73 +82,81 @@ const EventsPage = () => {
             setSelectedDate(null);
             setOpenCreate(true);
           }}
-          className="w-full sm:w-auto bg-linear-to-r from-purple-600 to-cyan-500 px-5 py-2.5 rounded-lg flex justify-center gap-2 font-medium shadow-lg shadow-purple-500/30"
+          className="
+            w-full sm:w-auto
+            bg-linear-to-r from-purple-600 to-cyan-500
+            px-5 py-2.5 rounded-lg
+            flex justify-center gap-2
+            font-medium
+            shadow-lg shadow-purple-500/30
+          "
         >
           <Plus size={18} /> Create Event
         </button>
       </div>
 
       {/* CONTENT */}
-      <div className="grid grid-cols-1 xl:grid-cols-[380px_1fr] gap-6 xl:gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-[340px_1fr] gap-6">
         {/* CALENDAR */}
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6">
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-5">
           {/* Controls */}
-          <div className="flex items-center justify-between mb-4 gap-2">
+          <div className="flex items-center justify-between mb-3">
             <button
               onClick={() => setCurrentDate(new Date(year, month - 1, 1))}
-              className="text-xl px-2"
+              className="px-2 text-lg"
             >
               ‹
             </button>
 
             <div className="flex gap-2">
-              {/* Month */}
               <select
                 value={month}
                 onChange={(e) =>
                   setCurrentDate(new Date(year, Number(e.target.value), 1))
                 }
-                className="bg-black/30 border border-white/10 rounded px-2 py-1 text-sm"
+                className="bg-black/30 border border-white/10 rounded px-2 py-1 text-xs sm:text-sm"
               >
                 {MONTHS.map((m, i) => (
-                  <option key={m} value={i}>{m}</option>
+                  <option key={m} value={i}>
+                    {m}
+                  </option>
                 ))}
               </select>
 
-              {/* Year */}
               <select
                 value={year}
                 onChange={(e) =>
                   setCurrentDate(new Date(Number(e.target.value), month, 1))
                 }
-                className="bg-black/30 border border-white/10 rounded px-2 py-1 text-sm"
+                className="bg-black/30 border border-white/10 rounded px-2 py-1 text-xs sm:text-sm"
               >
                 {Array.from({ length: 10 }, (_, i) => year - 5 + i).map((y) => (
-                  <option key={y} value={y}>{y}</option>
+                  <option key={y} value={y}>
+                    {y}
+                  </option>
                 ))}
               </select>
             </div>
 
             <button
               onClick={() => setCurrentDate(new Date(year, month + 1, 1))}
-              className="text-xl px-2"
+              className="px-2 text-lg"
             >
               ›
             </button>
           </div>
 
           {/* Weekdays */}
-          <div className="grid grid-cols-7 text-center text-xs text-gray-400 mb-2">
-            {["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map((d) => (
+          <div className="grid grid-cols-7 text-center text-[10px] sm:text-xs text-gray-400 mb-2">
+            {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((d) => (
               <div key={d}>{d}</div>
             ))}
           </div>
 
           {/* Days */}
-          <div className="grid grid-cols-7 gap-y-2">
-            {/* Empty slots */}
+          <div className="grid grid-cols-7 gap-y-1 sm:gap-y-2">
             {Array.from({ length: getStartDay(year, month) }).map((_, i) => (
-              <div key={`empty-${i}`} />
+              <div key={i} />
             ))}
 
             {Array.from({ length: getDaysInMonth(year, month) }).map((_, i) => {
@@ -149,26 +165,24 @@ const EventsPage = () => {
 
               const hasEvent = calendarEvents.some(
                 (e) =>
-                  new Date(e.date).toDateString() ===
-                  dateObj.toDateString()
+                  new Date(e.date).toDateString() === dateObj.toDateString()
               );
-
-              const isSelected =
-                selectedDate &&
-                selectedDate.toDateString() === dateObj.toDateString();
 
               return (
                 <div
                   key={day}
                   onClick={() => openCreateWithDate(dateObj)}
-                  className={`w-9 h-9 mx-auto flex items-center justify-center rounded-lg cursor-pointer text-sm
+                  className={`
+                    w-8 h-8 sm:w-9 sm:h-9
+                    mx-auto flex items-center justify-center
+                    rounded-md text-xs sm:text-sm
+                    cursor-pointer transition
                     ${
-                      isSelected
-                        ? "bg-linear-to-r from-purple-600 to-cyan-500 text-white"
-                        : hasEvent
+                      hasEvent
                         ? "bg-purple-600/30 text-white"
                         : "text-gray-300 hover:bg-white/10"
-                    }`}
+                    }
+                  `}
                 >
                   {day}
                 </div>
@@ -180,52 +194,28 @@ const EventsPage = () => {
         {/* EVENTS LIST */}
         <div className="space-y-5">
           <div className="flex gap-3 flex-wrap">
-            <button
-              onClick={() => setTab("upcoming")}
-              className={`px-4 py-2 rounded-lg text-sm ${
-                tab === "upcoming"
-                  ? "bg-white/10"
-                  : "text-gray-400 hover:bg-white/5"
-              }`}
-            >
-              Upcoming ({upcoming.length})
-            </button>
-
-            <button
-              onClick={() => setTab("past")}
-              className={`px-4 py-2 rounded-lg text-sm ${
-                tab === "past"
-                  ? "bg-white/10"
-                  : "text-gray-400 hover:bg-white/5"
-              }`}
-            >
-              Past ({past.length})
-            </button>
+            {["upcoming", "past"].map((t) => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`px-4 py-2 rounded-lg text-sm ${
+                  tab === t ? "bg-white/10" : "text-gray-400 hover:bg-white/5"
+                }`}
+              >
+                {t === "upcoming" ? "Upcoming" : "Past"}
+              </button>
+            ))}
           </div>
 
-          {tab === "upcoming" &&
-            (upcoming.length ? (
-              upcoming.map((e) => (
-                <EventCard
-                  key={e._id}
-                  event={e}
-                  onEdit={() => setEditEvent(e)}
-                />
-              ))
-            ) : (
-              <div className="text-gray-400 py-12 text-center text-sm">
-                No upcoming events
-              </div>
-            ))}
-
-          {tab === "past" &&
-            past.map((e) => (
-              <EventCard
-                key={e._id}
-                event={e}
-                onEdit={() => setEditEvent(e)}
-              />
-            ))}
+          {(tab === "upcoming" ? upcoming : past).length ? (
+            (tab === "upcoming" ? upcoming : past).map((e) => (
+              <EventCard key={e._id} event={e} onEdit={() => setEditEvent(e)} />
+            ))
+          ) : (
+            <div className="text-gray-400 py-12 text-center text-sm">
+              No events found
+            </div>
+          )}
         </div>
       </div>
 
@@ -241,10 +231,7 @@ const EventsPage = () => {
       )}
 
       {editEvent && (
-        <EditEventModal
-          event={editEvent}
-          onClose={() => setEditEvent(null)}
-        />
+        <EditEventModal event={editEvent} onClose={() => setEditEvent(null)} />
       )}
     </div>
   );

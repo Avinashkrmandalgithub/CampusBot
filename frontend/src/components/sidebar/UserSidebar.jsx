@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   MessageSquare,
   Settings,
-  GraduationCap,
   UserCog,
   ChevronLeft,
   BotMessageSquare,
@@ -11,7 +10,12 @@ import {
 import SidebarItem from "./SidebarItem";
 
 const UserSidebar = ({ closeMobile }) => {
-  const [collapsed, setCollapsed] = useState(window.innerWidth < 1024);
+  const [collapsed, setCollapsed] = useState(false);
+
+  //  Safe screen-size detection
+  useEffect(() => {
+    setCollapsed(window.innerWidth < 1024);
+  }, []);
 
   return (
     <aside
@@ -23,7 +27,7 @@ const UserSidebar = ({ closeMobile }) => {
         transition-all duration-300
       `}
     >
-      {/* Logo (SAME AS ADMIN) */}
+      {/* Logo (same as Admin) */}
       <div className="flex items-center gap-3 mb-10 px-2">
         <div className="relative">
           <div className="bg-linear-to-br from-cyan-400 to-purple-600 p-2 rounded-xl">
@@ -74,7 +78,7 @@ const UserSidebar = ({ closeMobile }) => {
 
       {/* Collapse Toggle */}
       <button
-        onClick={() => setCollapsed(!collapsed)}
+        onClick={() => setCollapsed((p) => !p)}
         className="mt-auto p-2 rounded-full hover:bg-white/5 flex justify-center"
       >
         <ChevronLeft

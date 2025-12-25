@@ -26,22 +26,19 @@ const AddFaqModal = ({ onClose }) => {
       question,
       answer,
       category,
-      tags: [
-        ...tags
-          .split(",")
-          .map((t) => t.trim())
-          .filter(Boolean),
-      ],
+      tags: tags
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean),
     });
 
     if (success) onClose();
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
-      <div className="w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar">
-        <div className="bg-[#0a0518] border border-white/10 rounded-2xl p-5 sm:p-6 relative shadow-2xl">
-          {/* Close */}
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-3">
+      <div className="w-full max-w-md max-h-[85vh] overflow-y-auto no-scrollbar">
+        <div className="bg-[#0a0518] border border-white/10 rounded-2xl p-5 relative">
           <button
             onClick={onClose}
             className="absolute right-4 top-4 text-gray-400 hover:text-white"
@@ -49,72 +46,47 @@ const AddFaqModal = ({ onClose }) => {
             <X size={18} />
           </button>
 
-          <h2 className="text-lg sm:text-xl font-bold mb-6">Add New FAQ</h2>
+          <h2 className="text-lg font-bold mb-5">Add New FAQ</h2>
 
-          <div className="space-y-5">
-            {/* Question */}
-            <div>
-              <label className="text-sm text-gray-400 mb-1 block">
-                Question
-              </label>
-              <textarea
-                rows={2}
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                className="w-full bg-transparent border border-purple-500/60 rounded-lg p-3 text-sm outline-none"
-                placeholder="Enter the question..."
-              />
-            </div>
+          <div className="space-y-4">
+            <textarea
+              rows={2}
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              placeholder="Question"
+              className="w-full bg-transparent border border-purple-500/50 rounded-lg p-3 text-sm outline-none"
+            />
 
-            {/* Answer */}
-            <div>
-              <label className="text-sm text-gray-400 mb-1 block">Answer</label>
-              <textarea
-                rows={3}
-                value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
-                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
-                placeholder="Enter the answer..."
-              />
-            </div>
+            <textarea
+              rows={3}
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              placeholder="Answer"
+              className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
+            />
 
-            {/* Category */}
-            <div>
-              <label className="text-sm text-gray-400 mb-1 block">
-                Category
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-[#0a0518] border border-white/10 rounded-lg p-3 text-sm text-white"
-              >
-                <option value="" disabled>
-                  Select category
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full bg-[#0a0518] border border-white/10 rounded-lg p-3 text-sm"
+            >
+              <option value="">Select category</option>
+              {categories.map((c) => (
+                <option key={c} value={c}>
+                  {c}
                 </option>
-                {categories.map((c) => (
-                  <option key={c} value={c} className="bg-[#0a0518]">
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
+              ))}
+            </select>
 
-            {/* Tags */}
-            <div>
-              <label className="text-sm text-gray-400 mb-1 block">
-                Tags (comma-separated)
-              </label>
-              <input
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
-                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
-                placeholder="exam, schedule, dates"
-              />
-            </div>
+            <input
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              placeholder="Tags (comma separated)"
+              className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
+            />
           </div>
 
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row justify-end gap-3 mt-8">
+          <div className="flex justify-end gap-3 mt-6">
             <button
               onClick={onClose}
               className="px-4 py-2 border border-white/10 rounded-lg text-sm"
@@ -125,7 +97,7 @@ const AddFaqModal = ({ onClose }) => {
             <button
               onClick={handleSubmit}
               disabled={loading}
-              className="px-5 py-2 bg-linear-to-r from-purple-600 to-cyan-500 rounded-lg text-sm font-medium disabled:opacity-60"
+              className="px-5 py-2 bg-linear-to-r from-purple-600 to-cyan-500 rounded-lg text-sm"
             >
               {loading ? "Adding..." : "Add FAQ"}
             </button>

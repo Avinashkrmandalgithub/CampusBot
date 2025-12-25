@@ -1,6 +1,6 @@
 import { useAdminAuthStore } from "../../store/useAdminAuthStore";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SidebarItem from "./SidebarItem";
 import {
   MessageSquare,
@@ -12,7 +12,6 @@ import {
   BotMessageSquare,
   Sparkles,
   ChevronLeft,
-  UserCog,
   GraduationCap,
   LogOut,
 } from "lucide-react";
@@ -21,7 +20,18 @@ const AdminSidebar = ({ closeMobile }) => {
   const { logoutAdmin } = useAdminAuthStore();
   const navigate = useNavigate();
 
-  const [collapsed, setCollapsed] = useState(window.innerWidth < 1024);
+  const [collapsed, setCollapsed] = useState(false);
+
+  /* ✅ Auto collapse on resize */
+  useEffect(() => {
+    const handleResize = () => {
+      setCollapsed(window.innerWidth < 1024);
+    };
+
+    handleResize(); // initial
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <aside
@@ -35,7 +45,7 @@ const AdminSidebar = ({ closeMobile }) => {
     >
       {/* Logo */}
       <div className="flex items-center gap-3 mb-10 px-2">
-        <div className="relative">
+        <div className="relative shrink-0">
           <div className="bg-linear-to-br from-cyan-400 to-purple-600 p-2 rounded-xl">
             <BotMessageSquare size={24} className="text-white" />
           </div>
@@ -85,7 +95,6 @@ const AdminSidebar = ({ closeMobile }) => {
           collapsed={collapsed}
           onClick={closeMobile}
         />
-
         <SidebarItem
           icon={Newspaper}
           label="News"
@@ -100,13 +109,6 @@ const AdminSidebar = ({ closeMobile }) => {
           collapsed={collapsed}
           onClick={closeMobile}
         />
-        {/* <SidebarItem
-          icon={UserCog}
-          label="Admin Login"
-          to="/admin-login"
-          collapsed={collapsed}
-          onClick={closeMobile}
-        /> */}
         <SidebarItem
           icon={Settings}
           label="Settings"
@@ -115,18 +117,19 @@ const AdminSidebar = ({ closeMobile }) => {
           onClick={closeMobile}
         />
 
+        {/* Logout */}
         <button
           onClick={async () => {
             await logoutAdmin();
             navigate("/admin-login");
           }}
           className="
-    mt-4 flex items-center gap-2
-    text-red-400 hover:text-red-300
-    px-3 py-2 rounded-lg
-    hover:bg-white/5
-    transition
-  "
+            mt-4 flex items-center gap-2
+            text-red-400 hover:text-red-300
+            px-3 py-2 rounded-lg
+            hover:bg-white/5
+            transition
+          "
         >
           <LogOut size={16} />
           {!collapsed && <span className="text-sm">Logout</span>}
@@ -135,7 +138,7 @@ const AdminSidebar = ({ closeMobile }) => {
 
       {/* Collapse Toggle */}
       <button
-        onClick={() => setCollapsed(!collapsed)}
+        onClick={() => setCollapsed((c) => !c)}
         className="mt-auto p-2 rounded-full hover:bg-white/5 flex justify-center"
       >
         <ChevronLeft

@@ -6,7 +6,7 @@ import AddUniversityModal from "../components/university/AddUniversityModal";
 import EditUniversityModal from "../components/university/EditUniversityModal";
 
 const UniversityInfoPage = () => {
-  const { info, fetchInfo } = useUniversityStore();
+  const { info, fetchInfo, loading } = useUniversityStore();
 
   const [addOpen, setAddOpen] = useState(false);
   const [editItem, setEditItem] = useState(null);
@@ -14,7 +14,7 @@ const UniversityInfoPage = () => {
 
   useEffect(() => {
     fetchInfo();
-  }, []);
+  }, [fetchInfo]);
 
   const filteredInfo = info.filter((item) =>
     `${item.section} ${item.title} ${item.content}`
@@ -55,49 +55,41 @@ const UniversityInfoPage = () => {
           "
         >
           <Plus size={18} />
-          <span>Add Info</span>
+          Add Info
         </button>
       </div>
 
       {/* Search */}
-      <div
-        className="
-          flex items-center gap-3
-          bg-white/5 border border-white/10
-          rounded-lg px-4 py-2.5
-          w-full sm:max-w-md
-        "
-      >
+      <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 w-full sm:max-w-md">
         <Search size={16} className="text-gray-400" />
         <input
           placeholder="Search placements, fees, rankings..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="
-            bg-transparent outline-none
-            text-sm flex-1
-            placeholder-gray-500
-          "
+          className="bg-transparent outline-none text-sm flex-1 placeholder-gray-500"
         />
       </div>
 
-      {/* Cards Grid */}
-      <div
-        className="
-          grid grid-cols-1
-          sm:grid-cols-2
-          xl:grid-cols-3
-          gap-5 sm:gap-6
-        "
-      >
-        {filteredInfo.map((item) => (
-          <UniversityInfoCard
-            key={item._id}
-            {...item}
-            onEdit={() => setEditItem(item)}
-          />
-        ))}
-      </div>
+      {/* Content */}
+      {loading ? (
+        <div className="text-center py-16 text-gray-400">
+          Loading university information...
+        </div>
+      ) : filteredInfo.length === 0 ? (
+        <div className="text-center py-16 text-gray-400">
+          No university information found
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 sm:gap-6">
+          {filteredInfo.map((item) => (
+            <UniversityInfoCard
+              key={item._id}
+              {...item}
+              onEdit={() => setEditItem(item)}
+            />
+          ))}
+        </div>
+      )}
 
       {/* Modals */}
       {addOpen && <AddUniversityModal onClose={() => setAddOpen(false)} />}

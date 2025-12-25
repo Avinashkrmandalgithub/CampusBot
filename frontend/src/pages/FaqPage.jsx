@@ -12,7 +12,6 @@ const FaqPage = () => {
     fetchFaqs();
   }, []);
 
-
   return (
     <div className="p-4 sm:p-6 z-10 space-y-6 sm:space-y-8">
       {/* Header */}
@@ -50,39 +49,16 @@ const FaqPage = () => {
       </div>
 
       {/* Search + Filter */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <div
-          className="
-            flex items-center gap-3
-            bg-white/5 border border-white/10
-            rounded-lg px-4 py-2.5
-            flex-1
-            focus-within:border-purple-500
-            transition
-          "
-        >
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-lg px-4 py-2 flex-1">
           <Search size={16} className="text-gray-400" />
           <input
             placeholder="Search FAQs..."
-            className="
-              bg-transparent outline-none
-              text-sm flex-1
-              placeholder-gray-500
-            "
+            className="bg-transparent outline-none text-sm flex-1"
           />
         </div>
 
-        <button
-          className="
-            w-full sm:w-auto
-            flex items-center justify-center gap-2
-            bg-white/5 border border-white/10
-            px-4 py-2.5 rounded-lg
-            text-sm
-            hover:bg-white/10
-            transition
-          "
-        >
+        <button className="flex items-center justify-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-lg text-sm">
           <Filter size={16} /> Filter
         </button>
       </div>

@@ -8,12 +8,12 @@ import { Menu } from "lucide-react";
 
 const CampusBotLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const { admin } = useAdminAuthStore();
+
   const Sidebar = admin ? AdminSidebar : UserSidebar;
 
   return (
-    <div className="relative flex h-screen bg-[#0a0518] text-white overflow-hidden">
+    <div className="relative flex min-h-screen bg-[#0a0518] text-white overflow-hidden">
       <SphericalParticle />
 
       {/* Mobile Overlay */}
@@ -36,10 +36,17 @@ const CampusBotLayout = () => {
         <Sidebar closeMobile={() => setMobileOpen(false)} />
       </div>
 
-      {/* Main Content (Scrollable) */}
-      <main className="relative flex-1 flex flex-col overflow-y-auto z-10">
+      {/* Main Content */}
+      <main
+        className="
+          relative flex-1 flex flex-col
+          overflow-y-auto z-10
+          px-3 sm:px-6
+        "
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      >
         {/* Mobile Top Bar */}
-        <div className="md:hidden flex items-center gap-3 p-3 border-b border-white/10">
+        <div className="md:hidden flex items-center gap-3 py-3 border-b border-white/10">
           <button
             onClick={() => setMobileOpen(true)}
             className="p-2 rounded-lg hover:bg-white/5"

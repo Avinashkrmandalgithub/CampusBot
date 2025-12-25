@@ -33,85 +33,56 @@ const EditFaqModal = ({ faq, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
-      <div className="w-full max-w-md max-h-[90vh] overflow-y-auto no-scrollbar">
-        <div className="bg-[#0a0518] border border-white/10 rounded-2xl p-5 sm:p-6 relative shadow-2xl">
-          {/* Close */}
+    <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-3">
+      <div className="w-full max-w-md max-h-[85vh] overflow-y-auto no-scrollbar">
+        <div className="bg-[#0a0518] border border-white/10 rounded-2xl p-5 relative">
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 text-gray-400 hover:text-white"
+            className="absolute right-4 top-4 text-gray-400"
           >
             <X size={18} />
           </button>
 
-          {/* Header */}
-          <h2 className="text-lg sm:text-xl font-bold mb-6">Edit FAQ</h2>
+          <h2 className="text-lg font-bold mb-5">Edit FAQ</h2>
 
-          {/* Form */}
-          <div className="space-y-5">
-            {/* Question */}
-            <div>
-              <label className="text-sm text-gray-400 mb-1 block">
-                Question
-              </label>
-              <textarea
-                rows={2}
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                className="w-full bg-transparent border border-purple-500/60 rounded-lg p-3 text-sm outline-none focus:border-purple-400"
-                placeholder="Edit the question..."
-              />
-            </div>
+          <div className="space-y-4">
+            <textarea
+              rows={2}
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              className="w-full bg-transparent border border-purple-500/50 rounded-lg p-3 text-sm"
+            />
 
-            {/* Answer */}
-            <div>
-              <label className="text-sm text-gray-400 mb-1 block">Answer</label>
-              <textarea
-                rows={3}
-                value={answer}
-                onChange={(e) => setAnswer(e.target.value)}
-                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none focus:border-white/30"
-                placeholder="Edit the answer..."
-              />
-            </div>
+            <textarea
+              rows={3}
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm"
+            />
 
-            {/* Category */}
-            <div>
-              <label className="text-sm text-gray-400 mb-1 block">
-                Category
-              </label>
-              <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-[#0a0518] border border-white/10 rounded-lg p-3 text-sm text-white focus:border-white/30"
-              >
-                {categories.map((c) => (
-                  <option key={c} value={c} className="bg-[#0a0518]">
-                    {c}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full bg-[#0a0518] border border-white/10 rounded-lg p-3 text-sm"
+            >
+              {categories.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
 
-            {/* Tags */}
-            <div>
-              <label className="text-sm text-gray-400 mb-1 block">
-                Tags (comma-separated)
-              </label>
-              <input
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
-                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none focus:border-white/30"
-                placeholder="exam, schedule, rules"
-              />
-            </div>
+            <input
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm"
+            />
           </div>
 
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row justify-end gap-3 mt-8">
+          <div className="flex justify-end gap-3 mt-6">
             <button
               onClick={onClose}
-              className="px-4 py-2 border border-white/10 rounded-lg text-sm hover:bg-white/5"
+              className="px-4 py-2 border rounded-lg text-sm"
             >
               Cancel
             </button>
@@ -119,7 +90,7 @@ const EditFaqModal = ({ faq, onClose }) => {
             <button
               onClick={handleUpdate}
               disabled={loading}
-              className="px-5 py-2 bg-linear-to-r from-purple-600 to-cyan-500 rounded-lg text-sm font-medium disabled:opacity-60"
+              className="px-5 py-2 bg-linear-to-r from-purple-600 to-cyan-500 rounded-lg text-sm"
             >
               {loading ? "Updating..." : "Update FAQ"}
             </button>

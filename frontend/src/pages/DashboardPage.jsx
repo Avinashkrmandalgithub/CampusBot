@@ -6,17 +6,30 @@ import QuickActions from "../components/dashboard/QuickActions";
 
 const DashboardPage = () => {
   return (
-    <div className="p-4 sm:p-6 z-10 space-y-6">
+    <section
+      className="
+        flex flex-col
+        flex-1
+        px-4 sm:px-6
+        py-4 sm:py-6
+        space-y-6
+      "
+    >
+      {/* Header */}
       <DashboardHeader />
+
+      {/* Stats */}
       <StatsGrid />
 
+      {/* Middle section */}
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <RecentUpdates />
         <TopQueries />
       </div>
 
+      {/* Actions */}
       <QuickActions />
-    </div>
+    </section>
   );
 };
 
