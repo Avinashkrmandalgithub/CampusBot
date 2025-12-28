@@ -1,14 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAdminAuthStore } from "../store/useAdminAuthStore";
-import { useEffect } from "react";
 
 const ProtectedAdminRoute = () => {
-  const { admin, checkAuth, checked } = useAdminAuthStore();
+  const { admin, checked } = useAdminAuthStore();
 
-  useEffect(() => {
-    if (!checked) checkAuth();
-  }, [checked]);
-
+  //  Wait until auth check completes
   if (!checked) {
     return (
       <div className="flex h-screen items-center justify-center text-white">
@@ -17,10 +13,12 @@ const ProtectedAdminRoute = () => {
     );
   }
 
+  //  Not admin
   if (!admin) {
     return <Navigate to="/admin-login" replace />;
   }
 
+  // Authorized
   return <Outlet />;
 };
 

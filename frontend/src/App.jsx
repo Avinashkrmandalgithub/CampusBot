@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { useAdminAuthStore } from "./store/useAdminAuthStore";
 
 import CampusBotLayout from "./layouts/CampusBotLayout";
 import AdminLoginPage from "./pages/AdminLoginPage";
@@ -14,18 +16,24 @@ import UniversityInfoPage from "./pages/UniversityInfoPage";
 import ProtectedAdminRoute from "./routes/ProtectedAdminRoute";
 
 function App() {
+  const checkAuth = useAdminAuthStore((s) => s.checkAuth);
+
+  useEffect(() => {
+    checkAuth(); //  restores admin session on refresh
+  }, []);
+
   return (
     <Routes>
       {/* Public */}
       <Route path="/admin-login" element={<AdminLoginPage />} />
 
-      {/*  Shared layout */}
+      {/* Shared layout */}
       <Route path="/" element={<CampusBotLayout />}>
         <Route index element={<Navigate to="/chat" replace />} />
         <Route path="chat" element={<ChatPage />} />
         <Route path="settings" element={<SettingsPage />} />
 
-        {/*  Admin-only */}
+        {/* Admin-only */}
         <Route element={<ProtectedAdminRoute />}>
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="faqs" element={<FaqPage />} />

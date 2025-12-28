@@ -1,16 +1,15 @@
 import { create } from "zustand";
 import axios from "axios";
+import { speak } from "../utils/speak";
 
 const API_URL = import.meta.env.VITE_API_URL;
-
 const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
 export const useChatStore = create((set, get) => ({
   messages: [
     {
       role: "bot",
-      text: "👋 Hi! I’m CampusBot, your AI assistant for Brainware University. Ask me anything about exams, fees, admissions, or campus life.",
-      source: "intro",
+      text: "👋 Hi! I’m CampusBot, your AI assistant for Brainware University.",
       time: new Date(),
     },
   ],
@@ -24,9 +23,10 @@ export const useChatStore = create((set, get) => ({
   sendMessage: async (message) => {
     if (!message.trim()) return;
 
-    get().addUserMessage(message);
+    // Stop any ongoing AI speech when user talks again
+    window.speechSynthesis.cancel();
 
-    //  Always show typing dots
+    get().addUserMessage(message);
     set({ loading: true });
 
     try {
@@ -36,23 +36,22 @@ export const useChatStore = create((set, get) => ({
         { withCredentials: true }
       );
 
-      //  Minimum typing delay (important)
       await sleep(500);
+
+      const reply = res.data.reply;
 
       set((state) => ({
         messages: [
           ...state.messages,
-          {
-            role: "bot",
-            text: res.data.reply,
-            source: res.data.source, // "faq" or "CampusBot"
-            time: new Date(),
-          },
+          { role: "bot", text: reply, time: new Date() },
         ],
         loading: false,
       }));
-    } catch (error) {
-      await sleep(600);
+
+      //  AI VOICE REPLY
+      speak(reply);
+    } catch (err) {
+      await sleep(400);
 
       set((state) => ({
         messages: [
@@ -60,12 +59,13 @@ export const useChatStore = create((set, get) => ({
           {
             role: "bot",
             text: "⚠️ Something went wrong. Please try again.",
-            source: "error",
             time: new Date(),
           },
         ],
         loading: false,
       }));
+
+      speak("Something went wrong. Please try again.");
     }
   },
 
@@ -74,8 +74,7 @@ export const useChatStore = create((set, get) => ({
       messages: [
         {
           role: "bot",
-          text: "👋 Hi! I’m CampusBot. How can I help you today?",
-          source: "intro",
+          text: "👋 Hi! I’m CampusBot. How can I help you?",
           time: new Date(),
         },
       ],

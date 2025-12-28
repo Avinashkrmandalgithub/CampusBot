@@ -13,7 +13,7 @@ const CampusBotLayout = () => {
   const Sidebar = admin ? AdminSidebar : UserSidebar;
 
   return (
-    <div className="relative flex min-h-screen bg-[#0a0518] text-white overflow-hidden">
+    <div className="relative flex h-screen bg-[#0a0518] text-white overflow-hidden">
       <SphericalParticle />
 
       {/* Mobile Overlay */}
@@ -36,17 +36,17 @@ const CampusBotLayout = () => {
         <Sidebar closeMobile={() => setMobileOpen(false)} />
       </div>
 
-      {/* Main Content */}
+      {/* Main Content (NO SCROLL HERE) */}
       <main
         className="
           relative flex-1 flex flex-col
-          overflow-y-auto z-10
+          overflow-hidden z-10
           px-3 sm:px-6
         "
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
-        {/* Mobile Top Bar */}
-        <div className="md:hidden flex items-center gap-3 py-3 border-b border-white/10">
+        {/* Mobile Top Bar (STATIC) */}
+        <div className="md:hidden flex items-center gap-3 py-3 border-b border-white/10 shrink-0">
           <button
             onClick={() => setMobileOpen(true)}
             className="p-2 rounded-lg hover:bg-white/5"
@@ -56,6 +56,7 @@ const CampusBotLayout = () => {
           <span className="font-semibold">CampusBot</span>
         </div>
 
+        {/* Page Content */}
         <Outlet />
       </main>
     </div>
