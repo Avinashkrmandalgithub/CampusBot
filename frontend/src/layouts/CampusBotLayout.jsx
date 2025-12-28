@@ -39,13 +39,13 @@ const CampusBotLayout = () => {
       {/* Main Content (NO SCROLL HERE) */}
       <main
         className="
-          relative flex-1 flex flex-col
-          overflow-hidden z-10
-          px-3 sm:px-6
-        "
+    relative flex-1 flex flex-col
+    overflow-y-auto z-10
+    px-3 sm:px-6
+  "
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
-        {/* Mobile Top Bar (STATIC) */}
+        {/* Mobile Top Bar */}
         <div className="md:hidden flex items-center gap-3 py-3 border-b border-white/10 shrink-0">
           <button
             onClick={() => setMobileOpen(true)}
@@ -56,7 +56,6 @@ const CampusBotLayout = () => {
           <span className="font-semibold">CampusBot</span>
         </div>
 
-        {/* Page Content */}
         <Outlet />
       </main>
     </div>
