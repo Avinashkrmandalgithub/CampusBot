@@ -49,41 +49,59 @@ const AddFaqModal = ({ onClose }) => {
           <h2 className="text-lg font-bold mb-5">Add New FAQ</h2>
 
           <div className="space-y-4">
-            <textarea
-              rows={2}
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              placeholder="Question"
-              className="w-full bg-transparent border border-purple-500/50 rounded-lg p-3 text-sm outline-none"
-            />
+            {/* Question */}
+            <div className="space-y-1">
+              <label className="text-xs text-gray-400">Question</label>
+              <textarea
+                rows={2}
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                placeholder="Enter the question"
+                className="w-full bg-transparent border border-purple-500/50 rounded-lg p-3 text-sm outline-none"
+              />
+            </div>
 
-            <textarea
-              rows={3}
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              placeholder="Answer"
-              className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
-            />
+            {/* Answer */}
+            <div className="space-y-1">
+              <label className="text-xs text-gray-400">Answer</label>
+              <textarea
+                rows={3}
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+                placeholder="Enter the answer"
+                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
+              />
+            </div>
 
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="w-full bg-[#0a0518] border border-white/10 rounded-lg p-3 text-sm"
-            >
-              <option value="">Select category</option>
-              {categories.map((c) => (
-                <option key={c} value={c}>
-                  {c}
-                </option>
-              ))}
-            </select>
+            {/* Category */}
+            <div className="space-y-1">
+              <label className="text-xs text-gray-400">Category</label>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                className="w-full bg-[#0a0518] border border-white/10 rounded-lg p-3 text-sm"
+              >
+                <option value="">Select category</option>
+                {categories.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-            <input
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
-              placeholder="Tags (comma separated)"
-              className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
-            />
+            {/* Tags */}
+            <div className="space-y-1">
+              <label className="text-xs text-gray-400">
+                Tags <span className="text-gray-500">(comma separated)</span>
+              </label>
+              <input
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+                placeholder="exam, fees, hostel"
+                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
+              />
+            </div>
           </div>
 
           <div className="flex justify-end gap-3 mt-6">
