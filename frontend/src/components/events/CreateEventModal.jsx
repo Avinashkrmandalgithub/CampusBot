@@ -31,7 +31,8 @@ const CreateEventModal = ({ onClose, selectedDate }) => {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center px-4">
-      <div className="w-full max-w-md max-h-[90vh] overflow-hidden">
+      {/* SCROLL CONTAINER */}
+      <div className="w-full max-w-md max-h-[90vh] overflow-y-auto">
         <div className="bg-[#0a0518] border border-white/10 rounded-2xl shadow-2xl flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
@@ -44,46 +45,65 @@ const CreateEventModal = ({ onClose, selectedDate }) => {
             </button>
           </div>
 
-          {/* Form (Scrollable) */}
-          <div className="p-4 sm:p-5 space-y-4 overflow-y-auto">
-            <input
-              placeholder="Event Name"
-              value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
-              className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none focus:border-purple-500"
-            />
+          {/* Form */}
+          <div className="p-4 sm:p-5 space-y-4">
+            {/* Event Name */}
+            <div className="space-y-1">
+              <label className="text-xs text-gray-400">Event Name</label>
+              <input
+                value={form.title}
+                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                placeholder="Event Name"
+                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none focus:border-purple-500"
+              />
+            </div>
 
-            <textarea
-              rows={3}
-              placeholder="Description"
-              value={form.description}
-              onChange={(e) =>
-                setForm({ ...form, description: e.target.value })
-              }
-              className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none resize-none focus:border-white/30"
-            />
+            {/* Description */}
+            <div className="space-y-1">
+              <label className="text-xs text-gray-400">Description</label>
+              <textarea
+                rows={3}
+                value={form.description}
+                onChange={(e) =>
+                  setForm({ ...form, description: e.target.value })
+                }
+                placeholder="Description"
+                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none resize-none focus:border-white/30"
+              />
+            </div>
 
-            <input
-              placeholder="Location"
-              value={form.location}
-              onChange={(e) => setForm({ ...form, location: e.target.value })}
-              className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none focus:border-white/30"
-            />
+            {/* Location */}
+            <div className="space-y-1">
+              <label className="text-xs text-gray-400">Location</label>
+              <input
+                value={form.location}
+                onChange={(e) => setForm({ ...form, location: e.target.value })}
+                placeholder="Location"
+                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none focus:border-white/30"
+              />
+            </div>
 
+            {/* Date & Time */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <input
-                type="date"
-                value={form.date}
-                onChange={(e) => setForm({ ...form, date: e.target.value })}
-                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
-              />
+              <div className="space-y-1">
+                <label className="text-xs text-gray-400">Date</label>
+                <input
+                  type="date"
+                  value={form.date}
+                  onChange={(e) => setForm({ ...form, date: e.target.value })}
+                  className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
+                />
+              </div>
 
-              <input
-                type="time"
-                value={form.time}
-                onChange={(e) => setForm({ ...form, time: e.target.value })}
-                className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
-              />
+              <div className="space-y-1">
+                <label className="text-xs text-gray-400">Time</label>
+                <input
+                  type="time"
+                  value={form.time}
+                  onChange={(e) => setForm({ ...form, time: e.target.value })}
+                  className="w-full bg-transparent border border-white/10 rounded-lg p-3 text-sm outline-none"
+                />
+              </div>
             </div>
           </div>
 
