@@ -3,7 +3,7 @@ import { detectIntent } from "../utils/intent.js";
 import { searchKnowledgeBase } from "../services/knowledgeSearch.js";
 import { aiFallback } from "../services/aiFallback.js";
 
-const MIN_SCORE = 2; // confidence threshold
+const MIN_SCORE = 5; // stricter confidence
 
 export const handleChat = async (req, res) => {
   try {
@@ -13,23 +13,22 @@ export const handleChat = async (req, res) => {
       return res.status(400).json({ error: "Message must be a string" });
     }
 
-    /* -------- Normalize & Analyze -------- */
     const normalized = normalizeText(message);
     const words = normalized.split(" ").filter(Boolean);
     const intent = detectIntent(words);
 
-    /* -------- Search Official Knowledge -------- */
-    const results = await searchKnowledgeBase(words);
+     console.log("🔎 Chat received:", {
+      raw: message,
+      normalized,
+      words,
+      intent,
+    });
 
-    if (results.length > 0 && results[0].score >= MIN_SCORE) {
-      // 🔍 Official data wins
-      console.log({
-        query: message,
-        intent,
-        source: results[0].type,
-        confidence: results[0].score,
-      });
+    const results = await searchKnowledgeBase(words, intent);
 
+    
+
+    if (results.length && results[0].score >= MIN_SCORE) {
       return res.json({
         reply: results[0].reply,
         source: results[0].type,
@@ -38,14 +37,8 @@ export const handleChat = async (req, res) => {
       });
     }
 
-    /* -------- AI Fallback (ONLY if no official data) -------- */
+    // AI ONLY if no official data
     const aiReply = await aiFallback(message);
-
-    console.log({
-      query: message,
-      intent,
-      source: "ai",
-    });
 
     return res.json({
       reply: aiReply,

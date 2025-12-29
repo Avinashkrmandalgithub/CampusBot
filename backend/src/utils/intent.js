@@ -1,8 +1,9 @@
 export const detectIntent = (words) => {
   const intents = {
-    event: ["event", "fest", "hackathon", "seminar"],
-    news: ["notice", "holiday", "announcement"],
-    faq: ["how", "when", "where", "procedure", "fees"],
+    faq: ["how", "procedure", "process", "fees", "facility", "library"],
+    event: ["event", "fest", "seminar", "hackathon"],
+    news: ["notice", "announcement", "holiday"],
+    university: ["placement", "ranking", "about", "infrastructure"],
   };
 
   for (const [intent, keys] of Object.entries(intents)) {
@@ -10,5 +11,6 @@ export const detectIntent = (words) => {
       return intent;
     }
   }
+
   return "unknown";
 };

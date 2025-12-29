@@ -4,4 +4,5 @@ export const normalizeText = (text) =>
     .replace(/\bu\b/g, "you")
     .replace(/\bur\b/g, "your")
     .replace(/[^\w\s]/g, "")
+    .replace(/\s+/g, " ")
     .trim();
